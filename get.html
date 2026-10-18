@@ -1,0 +1,51 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"><title>Get ASE Test Prep</title>
+<meta name="description" content="Study for your ASE certifications with practice tests and real diagnostic cases.">
+<meta property="og:title" content="ASE Test Prep by MotiveU">
+<meta property="og:description" content="Practice tests and diagnostic cases for your ASE certifications. Use a friend's code for 7 days of Pro free.">
+<style>
+.code{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:40px;letter-spacing:3px;color:var(--text);margin:4px 0 2px}
+.btn{display:block;text-align:center;background:var(--acc);color:#fff;text-decoration:none;font-weight:600;border-radius:14px;padding:14px 18px;margin:12px 0;border:0;width:100%;font-size:17px;cursor:pointer}
+.btn.alt{background:transparent;color:var(--acc);border:1px solid var(--line)}
+.hint{font-size:14px}
+</style></head><body><main>
+<div class="kicker">ASE Test Prep by MotiveU</div><h1>Pass your ASE tests</h1>
+<p>Practice tests for your ASE certifications, plus real diagnostic cases that teach you how to find the fault, not just memorize answers.</p>
+<div class="card" id="invite" hidden><p class="hint" style="margin:0">Your friend's code</p><div class="code" id="code"></div><p class="hint" style="margin:0">Enter it when you sign up and get <strong>7 days of Pro free</strong>.</p></div>
+<a class="btn" id="ios" href="https://apps.apple.com/app/id6759526838">Download on the App Store</a>
+<a class="btn" id="android" href="https://play.google.com/store/apps/details?id=com.motiveu.app">Get it on Google Play</a>
+<p class="hint" id="copied" hidden>Code copied. Paste it into the Referral code box when you sign up.</p>
+</main>
+<script>
+(function () {
+  var raw = new URLSearchParams(location.search).get('code') || '';
+  var code = raw.toUpperCase().replace(/[^A-Z0-9-]/g, '').slice(0, 16);
+  var ua = navigator.userAgent || '';
+  var ios = document.getElementById('ios');
+  var android = document.getElementById('android');
+  var isIOS = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && 'ontouchend' in document);
+  var isAndroid = /Android/.test(ua);
+
+  if (code) {
+    document.getElementById('code').textContent = code;
+    document.getElementById('invite').hidden = false;
+    android.href += '&referrer=' + encodeURIComponent('code=' + code);
+  }
+  // Put this phone's store first and the other one second, quieter.
+  if (isIOS) android.className = 'btn alt';
+  else if (isAndroid) { ios.className = 'btn alt'; ios.parentNode.insertBefore(android, ios); }
+
+  function copyThenGo(e) {
+    if (!code || !navigator.clipboard) return;
+    e.preventDefault();
+    var href = e.currentTarget.href;
+    navigator.clipboard.writeText(code).then(function () {
+      document.getElementById('copied').hidden = false;
+    }).catch(function () {}).then(function () {
+      setTimeout(function () { location.href = href; }, 600);
+    });
+  }
+  ios.addEventListener('click', copyThenGo);
+  android.addEventListener('click', copyThenGo);
+})();
+</script>
+</body></html>
